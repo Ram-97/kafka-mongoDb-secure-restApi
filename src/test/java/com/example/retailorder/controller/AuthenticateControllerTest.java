@@ -1,7 +1,6 @@
 package com.example.retailorder.controller;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -22,7 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class AuthenticateControllerTest {
 	@Autowired
 	private MockMvc mockMvc;
-	
+
 	@MockBean
 	private UserDetailService userDetailsService;
 	@MockBean
@@ -30,30 +29,23 @@ public class AuthenticateControllerTest {
 	@MockBean
 	private AuthenticationManager authenticationManager;
 
-
 	@Test
 	public void testGetTokenValidRequest() throws Exception {
-		AuthenticationRequest user = new AuthenticationRequest("Ram","Password1");
-        ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(user);
-      
-       mockMvc.perform(post("/authenticate/token")
-				.contentType(MediaType.APPLICATION_JSON)
-				.content(json)
-                .accept(MediaType.APPLICATION_JSON)
-				).andExpect(status().isOk());
+		AuthenticationRequest user = new AuthenticationRequest("Ram", "Password1");
+		ObjectMapper mapper = new ObjectMapper();
+		String json = mapper.writeValueAsString(user);
+
+		mockMvc.perform(post("/authenticate/token").contentType(MediaType.APPLICATION_JSON).content(json)
+				.accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
 	}
-	
+
 	@Test
 	public void testGetTokenInValidRequest() throws Exception {
-		AuthenticationRequest user = new AuthenticationRequest("Ram","Password1");
-        ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(user);
-      
-       mockMvc.perform(post("/authenticate/token")
-				.contentType(MediaType.APPLICATION_JSON)
-				.content(json)
-                .accept(MediaType.APPLICATION_JSON)
-				).andExpect(status().isBadRequest());
+		AuthenticationRequest user = new AuthenticationRequest("Ram", "Password1");
+		ObjectMapper mapper = new ObjectMapper();
+		String json = mapper.writeValueAsString(user);
+
+		mockMvc.perform(post("/authenticate/token").contentType(MediaType.APPLICATION_JSON).content(json)
+				.accept(MediaType.APPLICATION_JSON)).andExpect(status().isBadRequest());
 	}
 }
